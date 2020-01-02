@@ -150,3 +150,62 @@
 
 (use-package magit
   :straight t)
+
+;;;;;;;;;;;;;;
+;; nix-mode ;;
+;;;;;;;;;;;;;;
+
+(use-package nix-mode
+  :straight t
+  :mode "\\.nix\\'")
+
+;;;;;;;;;;;;;;;
+;; easy-hugo ;;
+;;;;;;;;;;;;;;;
+
+(use-package easy-hugo
+  :straight t
+  :config
+  (setq easy-hugo-basedir "/home/darius/geri-darbai/")
+  (setq easy-hugo-postdir "/home/darius/geri-darbai/content/naujienos")
+  (setq easy-hugo-default-ext ".org"))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; highligh parenthesis ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(use-package highlight-parentheses
+  :straight t)
+
+;;;;;;;;;;;;;;;;;
+;; org-journal ;;
+;;;;;;;;;;;;;;;;;
+
+(use-package org-journal
+  :straight t)
+
+;;;;;;;;;;;;;;;
+;; emacs-w3m ;;
+;;;;;;;;;;;;;;;
+
+(use-package w3m
+  :straight t)
+
+;;;;;;;;;;;
+;; emms ;;;
+;;;;;;;;;;;
+
+(use-package emms
+  :straight t
+  :init
+     (require 'emms-setup)
+     (emms-standard)
+     (emms-default-players))
+
+;;;;;;;;;;;;;;;;;;;
+;; markdown-mode ;;
+;;;;;;;;;;;;;;;;;;;
+
+(use-package markdown-mode
+  :straight t)
+
