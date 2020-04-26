@@ -42,11 +42,12 @@ in
 
   # Select internationalisation properties.
     i18n = {
-      consoleFont = "Lat2-Terminus16";
-      consoleKeyMap = "us";
       defaultLocale = "lt_LT.UTF-8";
     };
 
+    console.keyMap = "us";
+    console.font = "Lat2-Terminus16";
+    
   # Set your time zone.
     time.timeZone = "Europe/Vilnius";
 
@@ -84,14 +85,12 @@ in
       syncthing
       mplayer
       ntfs3g
-      android-studio
+      unstable.android-studio
       multimc
       lightspark
       gitter
+      zip
     ];
-    
-  # Enable virtualbox.
-    virtualisation.virtualbox.host.enable = true;
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -141,15 +140,6 @@ in
   # Enable touchpad support.
     services.xserver.libinput.enable = true;
 
-  # Enable the KDE Desktop Environment.
-  # services.xserver.displayManager.sddm.enable = true;
-  # services.xserver.desktopManager.plasma5.enable = true;
-
-    security.wrappers = {
-      firejail = {
-        source = "${pkgs.firejail.out}/bin/firejail";
-      };
-    };
     
   # Define a user account. Don't forget to set a password with ‘passwd’.
     users.users.darius = {
@@ -177,6 +167,6 @@ in
   # compatible, in order to avoid breaking some software such as database
   # servers. You should change this only after NixOS release notes say you
   # should.
-    system.stateVersion = "19.09"; # Did you read the comment?
+    system.stateVersion = "20.03"; # Did you read the comment?
     
 }
