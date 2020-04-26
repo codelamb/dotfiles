@@ -134,7 +134,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;
 ;; e-ink theme ;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;
-(use-package eink-theme
+ (use-package nimbus-theme
   :straight t)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;
@@ -209,3 +209,31 @@
 (use-package markdown-mode
   :straight t)
 
+;;;;;;;;;;;;;;;
+;; undo tree ;;
+;;;;;;;;;;;;;;;
+
+(use-package undo-tree
+  :straight t)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; elm-mode and dependencies ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(use-package elm-mode
+  :straight t
+  :init
+  (progn
+    (require 'elm-tags)
+    (require 'elm-format)
+    (require 'elm-imenu)
+    (require 'elm-indent)
+    (require 'elm-interactive)
+    (require 'elm-font-lock)))
+
+;;;;;;;;;;;;;;;;;;;;;
+;; emms-soundcloud ;;
+;;;;;;;;;;;;;;;;;;;;;
+
+(use-package emms-soundcloud
+  :straight t)
