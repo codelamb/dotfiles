@@ -4,24 +4,12 @@
 
 { config, pkgs, ... }:
 
-let
-  unstableTarball =
-    fetchTarball
-      https://github.com/NixOS/nixpkgs-channels/archive/nixos-unstable.tar.gz;
-in
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
+ imports =
+   [ # Include the results of the hardware scan.
+     ./hardware-configuration.nix
+   ];
 
-  nixpkgs.config = {
-    packageOverrides = pkgs: {
-      unstable = import unstableTarball {
-        config = config.nixpkgs.config;
-      };
-    };
-  };
   
   # Use the GRUB 2 boot loader.
     boot.loader.grub.enable = true;
@@ -31,7 +19,7 @@ in
   # boot.loader.efi.efiSysMountPoint = "/boot/efi";
   # Define on which hard drive you want to install Grub.
     boot.loader.grub.device = "/dev/sda"; # or "nodev" for efi only
-    networking.networkmanager.enable = true; 
+    networking.networkmanager.enable = true;
 
   # networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -55,41 +43,44 @@ in
   # $ nix search wget
     environment.systemPackages = with pkgs; [
       wget
-	    emacs	
-	    libreoffice
-    	# kdeApplications.okular
-    	# kdeApplications.gwenview
-	    firefox
-	    ark
-    	xineLib
-    	xineUI
-	    pwsafe
-	    networkmanager_dmenu
-	    htop
-	    hugo
-	    ledger
-	    lynx
-	    w3m
+        # (import /etc/nixo/emacs.nix { inherit pkgs; })
+      emacs	
+      libreoffice
+      firefox
+      ark
+      xineLib
+      xineUI
+      pwsafe
+      networkmanager_dmenu
+      htop
+      hugo
+      ledger
+      lynx
+      w3m
       chromium
-      tuxpaint
       discord
       gitFull
-      tk
       firejail
-      gzip
-      xclip
+      xclip #Tool to access the X clipboard from a console application
       gimp
       scribus
-      adapta-gtk-theme
-      gnome3.gnome-tweaks
       syncthing
       mplayer
-      ntfs3g
-      unstable.android-studio
+      smplayer #graphical frontend for mplayer
+      ntfs3g #to read windows formated usb flash drives
+      android-studio
       multimc
-      lightspark
+      lightspark #Open source Flash Player implementation
       gitter
       zip
+      unzip
+      pandoc
+      bashmount
+      wesnoth
+      at-spi2-core # install after switch to 20.09
+      okular
+      kbdd
+      kcalc
     ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -105,41 +96,30 @@ in
   # services.openssh.enable = true;
 
   # Open ports in the firewall.
-    networking.firewall.allowedTCPPorts = [ 80 ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
+    networking.firewall.allowedTCPPorts = [ 80 443 ];
+  # networking.firewall.allowedUDPPorts = [ 631 ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
 
   # Enable CUPS to print documents.
-    services.printing.enable = true;
+     services.printing.enable = true;
+  #  services.printing.drivers = [ ... ];
     
   # Enable sound.
     sound.enable = true;
     hardware.pulseaudio.enable = true;
 
-  # Enable the X11 windowing system.
-  #	services.xserver.enable = true;
-  #	services.xserver.autorun = true;
-  #	services.xserver.layout = "us";
-  #	services.xserver.desktopManager.default = "none";
-  #	services.xserver.desktopManager.xterm.enable = true;
-  #	services.xserver.displayManager.lightdm.enable = true;
-  #	services.xserver.windowManager.i3.enable = true;
+  # KDE
+    services.xserver.enable = true;
+    services.xserver.displayManager.sddm.enable = true;
+    services.xserver.desktopManager.plasma5.enable = true;
 
-     services.xserver.enable = true;
-     services.xserver.displayManager.gdm.enable = true;
-  #  services.xserver.displayManager.gdm.wayland = false;
-     services.xserver.desktopManager.gnome3.enable = true;
-    
-  # Allow modifications of gnome theme.
-    services.dbus.packages = with pkgs; [ gnome3.dconf gnome2.GConf ];
-  
+
   # services.xserver.layout = "us";
   # services.xserver.xkbOptions = "eurosign:e";
 
   # Enable touchpad support.
     services.xserver.libinput.enable = true;
-
     
   # Define a user account. Don't forget to set a password with ‘passwd’.
     users.users.darius = {
@@ -151,7 +131,7 @@ in
     };
     users.users.ausris = {
       isNormalUser = true;
-      };
+    };
 
   # Automatic upgrades
     system.autoUpgrade.enable = true;
@@ -162,11 +142,11 @@ in
 
   # EVIL
     nixpkgs.config.allowUnfree = true;
+  # nixpkgs.config.allowBroken = true;
 
   # This value determines the NixOS release with which your system is to be
   # compatible, in order to avoid breaking some software such as database
   # servers. You should change this only after NixOS release notes say you
   # should.
-    system.stateVersion = "20.03"; # Did you read the comment?
-    
+    system.stateVersion = "20.03"; # Did you read the comment?    
 }
