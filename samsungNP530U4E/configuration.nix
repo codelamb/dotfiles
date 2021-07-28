@@ -57,6 +57,10 @@
 
   # Enable CUPS to print documents.
     services.printing.enable = true;
+    services.printing.drivers = [ pkgs.splix ]; # for xerox workcenter 3119
+
+  # Scanner
+    hardware.sane.enable = true;
 
   # Enable sound.
     sound.enable = true;
@@ -68,7 +72,7 @@
   # Define a user account. Don't forget to set a password with ‘passwd’.
     users.users.VidaMarija = {
       isNormalUser = true;
-      extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
+      extraGroups = [ "wheel" "scanner" "lp" ]; # Enable ‘sudo’ for the user.
     };
 
   # List packages installed in system profile. To search, run:
@@ -93,6 +97,9 @@
       xclip #Tool to access the X clipboard from a console application
       lightspark #Open source Flash Player implementation
       mtools # to read fat32 filesystems
+      teams
+      webcamoid
+      gnome.simple-scan
     ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -135,6 +142,18 @@
   # Security
   boot.loader.systemd-boot.editor = false;
 
+  # Bluetooth
+  hardware.bluetooth.enable = true;
+  services.blueman.enable = true;
+  hardware.bluetooth.settings = {
+  General = {
+    Enable = "Source,Sink,Media,Socket";
+    };
+  };
+  hardware.pulseaudio.extraConfig = "
+  load-module module-switch-on-connect
+  ";
+
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
   # on your system were taken. It‘s perfectly fine and recommended to leave
@@ -144,3 +163,4 @@
   system.stateVersion = "21.05"; # Did you read the comment?
 
 }
+
